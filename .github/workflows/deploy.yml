@@ -23,6 +23,7 @@ jobs:
         ssh -o "StrictHostKeyChecking=no" ${{ vars.SERVER_USERNAME }}@${{ vars.SERVER_HOST }} "
         cd ${{ vars.SERVER_PROJECT_PATH }} &&
         git pull &&
+        nvm use 18 &&
         npm ci &&
         pm2 startOrRestart ecosystem.config.js
         "
