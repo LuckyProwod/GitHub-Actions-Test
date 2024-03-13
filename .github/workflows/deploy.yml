@@ -21,18 +21,8 @@ jobs:
     - name: Deploy to Server
       run: >
         ssh -o "StrictHostKeyChecking=no" ${{ vars.SERVER_USERNAME }}@${{ vars.SERVER_HOST }} "
-        # Подставить имя папки проекта
         cd ${{ vars.SERVER_PROJECT_PATH }} &&
         git pull &&
         npm ci &&
-        # Тут прокидываются все необходимые переменные окружения для сборки
-        SECRET_TOKEN=${{ secrets.SECRET_TOKEN }}
-        PUBLIC_VARIABLE=${{ vars.PUBLIC_VARIABLE }}
-        NODE_ENV=production
-        npm run build &&
-        # Тут прокидываются все необходимые переменные окружения для запуска проекта
-        SECRET_TOKEN=${{ secrets.SECRET_TOKEN }}
-        PUBLIC_VARIABLE=${{ vars.PUBLIC_VARIABLE }}
-        NODE_ENV=production
         pm2 startOrRestart ecosystem.config.js
         "
