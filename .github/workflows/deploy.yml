@@ -27,6 +27,7 @@ jobs:
         nvm install 18.17 &&
         nvm use 18.17 &&
         git pull &&
+        npm install pm2 &&
         npm ci &&
         pm2 startOrRestart ecosystem.config.js
         "
