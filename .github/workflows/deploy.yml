@@ -18,18 +18,15 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
 
-    - name: Use Node.js 18.x with nvm
-      run: |
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-        nvm install 18
-        nvm use 18
-
     - name: Deploy to Server
       run: >
         ssh -o "StrictHostKeyChecking=no" ${{ vars.SERVER_USERNAME }}@${{ vars.SERVER_HOST }} "
         cd ${{ vars.SERVER_PROJECT_PATH }} &&
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash &&
+        export NVM_DIR="$HOME/.nvm" &&
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm &&
+        nvm install 18 &&
+        nvm use 18 &&
         git pull &&
         npm ci &&
         pm2 startOrRestart ecosystem.config.js
