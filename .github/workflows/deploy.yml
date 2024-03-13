@@ -23,10 +23,9 @@ jobs:
         ssh -o "StrictHostKeyChecking=no" ${{ vars.SERVER_USERNAME }}@${{ vars.SERVER_HOST }} "
         cd ${{ vars.SERVER_PROJECT_PATH }} &&
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash &&
-        export NVM_DIR="\$HOME/.nvm" &&
-        [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh" && 
-        $NVM_DIR/nvm install 18.17 &&
-        $NVM_DIR/nvm use 18.17 &&
+        source ~/.nvm/nvm.sh &&
+        nvm install 18.17 &&
+        nvm use 18.17 &&
         git pull &&
         npm ci &&
         pm2 startOrRestart ecosystem.config.js
