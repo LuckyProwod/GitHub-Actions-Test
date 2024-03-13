@@ -21,6 +21,7 @@ jobs:
     - name: Deploy to Server
       run: >
         ssh -o "StrictHostKeyChecking=no" ${{ vars.SERVER_USERNAME }}@${{ vars.SERVER_HOST }} "
+        source ~/.bashrc &&
         cd ${{ vars.SERVER_PROJECT_PATH }} &&
         git pull &&
         nvm use 18 &&
