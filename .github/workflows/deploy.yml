@@ -23,8 +23,7 @@ jobs:
         ssh -o "StrictHostKeyChecking=no" ${{ vars.SERVER_USERNAME }}@${{ vars.SERVER_HOST }} "
         cd ${{ vars.SERVER_PROJECT_PATH }} &&
         git pull &&
-        export NVM_DIR='$HOME/.nvm' &&
-        [ -s '$NVM_DIR/nvm.sh' ] && \. '$NVM_DIR/nvm.sh' &&
+        export NVM_DIR='$HOME/.nvm' [ -s '$NVM_DIR/nvm.sh' ] && \. '$NVM_DIR/nvm.sh' &&
         nvm use 18 &&
         npm ci &&
         pm2 startOrRestart ecosystem.config.js
